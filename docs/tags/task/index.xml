@@ -1,0 +1,30 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gardener – task</title><link>https://gardener.cloud/tags/task/</link><description>Recent content in task on Gardener</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Thu, 19 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://gardener.cloud/tags/task/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Hibernate a Cluster</title><link>https://gardener.cloud/docs/gardener/usage/shoot_hibernate/</link><pubDate>Thu, 19 Nov 2020 00:00:00 +0000</pubDate><guid>https://gardener.cloud/docs/gardener/usage/shoot_hibernate/</guid><description>
+&lt;h1 id="hibernate-a-cluster">Hibernate a Cluster&lt;/h1>
+&lt;p>Clusters are only needed 24 hours a day if they run productive workload. So whenever you do development in a cluster, or just use it for tests or demo purposes, you can save much money if you scale-down your Kubernetes resources whenever you don&amp;rsquo;t need them. However, scaling them down manually can become time-consuming the more resources you have.&lt;/p>
+&lt;p>Gardener offers a clever way to automatically scale-down all resources to zero: cluster hibernation. You can either hibernate a cluster by pushing a button or by defining a hibernation schedule.&lt;/p>
+&lt;blockquote>
+&lt;p>To save costs, it&amp;rsquo;s recommended to define a hibernation schedule before the creation of a cluster. You can hibernate your cluster or wake up your cluster manually even if there&amp;rsquo;s a schedule for its hibernation.&lt;/p>
+&lt;/blockquote>
+&lt;ul>
+&lt;li>&lt;a href="#what-is-hibernated">What is hibernated?&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#what-isnt-affected-by-the-hibernation">What isn’t affected by the hibernation?&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#hibernate-your-cluster-manually">Hibernate your cluster manually&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#wake-up-your-cluster-manually">Wake up your cluster manually&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#create-a-schedule-to-hibernate-your-cluster">Create a schedule to hibernate your cluster&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="what-is-hibernated">What is hibernated?&lt;/h2>
+&lt;p>When a cluster is hibernated, Gardener scales down worker nodes and the cluster&amp;rsquo;s control plane to free resources at the IaaS provider. This affects:&lt;/p>
+&lt;ul>
+&lt;li>Your workload, for example, pods, deployments, custom resources.&lt;/li>
+&lt;li>The virtual machines running your workload.&lt;/li>
+&lt;li>The resources of the control plane of your cluster.&lt;/li>
+&lt;/ul>
+&lt;h2 id="what-isnt-affected-by-the-hibernation">What isn’t affected by the hibernation?&lt;/h2>
+&lt;p>To scale up everything where it was before hibernation, Gardener doesn’t delete state-related information, that is, information stored in persistent volumes. The cluster state as persistent in &lt;code>etcd&lt;/code> is also preserved.&lt;/p>
+&lt;h2 id="hibernate-your-cluster-manually">Hibernate your cluster manually&lt;/h2>
+&lt;p>To hibernate your cluster you can run the following &lt;code>kubectl&lt;/code> command:&lt;/p>
+&lt;pre tabindex="0">&lt;code>$ kubectl patch shoot -n $NAMESPACE $SHOOT_NAME -p &amp;#39;{&amp;#34;spec&amp;#34;:{&amp;#34;hibernation&amp;#34;:{&amp;#34;enabled&amp;#34;: true}}}&amp;#39;
+&lt;/code>&lt;/pre>&lt;h2 id="wake-up-your-cluster-manually">Wake up your cluster manually&lt;/h2>
+&lt;p>To wake up your cluster you can run the following &lt;code>kubectl&lt;/code> command:&lt;/p>
+&lt;pre tabindex="0">&lt;code>$ kubectl patch shoot -n $NAMESPACE $SHOOT_NAME -p &amp;#39;{&amp;#34;spec&amp;#34;:{&amp;#34;hibernation&amp;#34;:{&amp;#34;enabled&amp;#34;: false}}}&amp;#39;
+&lt;/code>&lt;/pre>&lt;p>&lt;strong>Hibernation schedule is also supported. More details can be found &lt;a href="https://github.com/gardener/gardener/blob/master/pkg/apis/core/v1beta1/types_shoot.go#L335-L348">here&lt;/a>&lt;/strong>&lt;/p></description></item></channel></rss>
